@@ -15,7 +15,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="index.html">Team 4 - Sam Goormans &amp; Sam Goormans</a>
+		      <a class="navbar-brand" href="index.html">Team 4 - Jonas De Prins &amp; Sam Goormans</a>
 		    </div>
 
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -28,22 +28,21 @@
 		</nav>
 	<div class="container">
 		
-		<div class="form-inline">
-			<select id="light" class="form-control"></select>
+		<form class="form-inline" method="POST" action="light">
+			<select id="light" name="light" class="form-control"></select>
 
-			<button class="btn btn-success" id="aan" onclick="lightOn()">Aan</button>
-			<button class="btn btn-danger" id="uit">Uit</button>
+			<button class="btn btn-success" name="aan" id="aan">Aan</button>
+			<button class="btn btn-danger" name="uit" id="uit">Uit</button>
 
-			<select id="color" class="form-control" onchange="lightOn()">
+			<select id="color" name="colorHue" class="form-control" onchange="submit()">
 				<option value="0">Rood</option>
 				<option value="12750">Geel</option>
 				<option value="46920">Blauw</option>
 				<option value="25500">Groen</option>
 			</select>
 
-		</div>
+		</form>
 	</div>
-	
-	<script type="text/javascript" src="script.js"></script>
+
 </body>
 </html>
