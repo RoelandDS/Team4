@@ -20,31 +20,40 @@
 
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav navbar-right">
-		        <li class="active"><a href="index.html">Hue lamp</a></li>
-		        <li><a href="#">QR code</a></li>
+<!-- 		        <li class="active"><a href="index.html">Hue lamp</a></li>
+		        <li><a href="#">QR code</a></li> -->
 		      </ul>
 		    </div>
 		  </div>
 		</nav>
 	<div class="container">
-		
+		<h2>Lights</h2>
 		<form class="form-inline" method="POST" action="light">
 			<select id="light" name="light" class="form-control"></select>
 
-			<button class="btn btn-success" name="aan" id="aan">Aan</button>
-			<button class="btn btn-danger" name="uit" id="uit">Uit</button>
-
-			<select id="color" name="colorHue" class="form-control" onchange="submit()">
+<!-- 			<select id="color" name="colorHue" class="form-control">
 				<option value="0">Rood</option>
 				<option value="12750">Geel</option>
 				<option value="46920">Blauw</option>
 				<option value="25500">Groen</option>
-			</select>
+			</select> -->
+
+			<button class="btn btn-danger" name="colorHue" value="0">Rood</button>
+			<button class="btn btn-warning" name="colorHue" value="12750">Geel</button>
+			<button class="btn btn-info" name="colorHue" value="46920">Blauw</button>
+			<button class="btn btn-success" name="colorHue" value="25500">Groen</button>
+			<button class="btn btn-default" name="uit" id="uit">Uit</button>
+
 
 		</form>
+		<h2>QR code</h2>
+		<img src="http://localhost:88">
 	</div>
 
 	<script type="text/javascript">
+
+
+	$(document).ready(function () {
 		$.ajax(
 		{
 			url: "/lights",
@@ -56,10 +65,6 @@
 				});
 			}
 		});
-
-	$(document).ready(function () {
-		alert("test");
-		$('#light').val(GetQueryStringParams('light'));
 	});
 
 	function GetQueryStringParams(sParam)

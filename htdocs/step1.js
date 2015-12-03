@@ -10,19 +10,19 @@ var username = "389095253ee19e27389f94f12ce78153";
 var host = "10.0.1.3";
 var path = "/api/" + username + "/lights";
 
+
 // Index pagina
 app.get('/',function(req, res) {
-
-
   	res.sendFile(__dirname+'/index.html');
 });
+
 
 // Voor het ophalen van de request variabelen
 app.use(bodyParser());
 
 // Get options voor select
 app.get('/lights',function(req, res) {
-	var selected = req.body.light;
+	var selected = req.query.light;
 	var options = "";
 	request({
 		uri: 'http://' + host + path,
@@ -31,7 +31,6 @@ app.get('/lights',function(req, res) {
 		function(error, response, body) {
 
 			var obj = JSON.parse(body);
-			console.log(obj);
 
 			var options = "";
 
@@ -42,11 +41,11 @@ app.get('/lights',function(req, res) {
 	 				options += ' selected';
 	 			options += '>' + obj[light]["name"] + '</option>';
 	 		}
-	 		console.log(options);
 	 		res.end(options);
 	});
 	
 });
+
 
 // CSS
 app.get('/bootstrap.min.css',function(req, res) {
@@ -57,9 +56,10 @@ app.get('/jquery.js',function(req, res) {
   	res.sendFile(__dirname+'/jquery.js');
 });
 
+
+
 // Post request opvangen
 app.post('/light',function(req, res) {
-	console.log(req.body);
   	var color = req.body.colorHue;
   	var light = req.body.light;
 
@@ -76,8 +76,6 @@ app.post('/light',function(req, res) {
 // Functie voor het aanspreken van de lichten
 function lightFunc(light, colorHue, obj) {
 
-	
-	console.log(JSON.stringify(obj));
 
 	var bodyString = JSON.stringify(obj);
 
