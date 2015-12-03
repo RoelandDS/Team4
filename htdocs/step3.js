@@ -7,7 +7,7 @@ var obj = {
 
 
 http.createServer(function (req, res) {
-	res.writeHead(200, {"Content-Type": "application/json"});
+	res.writeHead(200, {"Content-Type": "application/json", 'Access-Control-Allow-Origin': '*'});
 	res.end(JSON.stringify(obj));
 }).listen(4000);
 
