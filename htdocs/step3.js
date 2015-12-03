@@ -9,7 +9,7 @@ var obj = {
 http.createServer(function (req, res) {
 	res.writeHead(200, {"Content-Type": "application/json"});
 	res.end(JSON.stringify(obj));
-}).listen(80);
+}).listen(4000);
 
 
 console.log("Server is running");
