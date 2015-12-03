@@ -16,7 +16,7 @@ var options = {
     host: 'hackthefuture.herokuapp.com',
     path: '/dashboard/team',
     port: 80,
-    method: 'PUT',
+    method: 'POST',
     headers: headers
 };
 

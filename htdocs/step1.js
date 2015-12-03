@@ -3,28 +3,65 @@ var app = require('express')();
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var httpReq = require('http');
+var request = require('request');
 
-// Username voor de HUE API
+// Username, host en path voor de HUE API
 var username = "389095253ee19e27389f94f12ce78153";
+var host = "10.0.1.3";
+var path = "/api/" + username + "/lights";
 
 // Index pagina
 app.get('/',function(req, res) {
+
+
   	res.sendFile(__dirname+'/index.html');
-});
-// CSS
-app.get('/bootstrap.min.css',function(req, res) {
-  	res.sendFile(__dirname+'/bootstrap.min.css');
 });
 
 // Voor het ophalen van de request variabelen
 app.use(bodyParser());
+
+// Get options voor select
+app.get('/lights',function(req, res) {
+	var selected = req.body.light;
+	var options = "";
+	request({
+		uri: 'http://' + host + path,
+		method: "GET" 
+	}, 
+		function(error, response, body) {
+
+			var obj = JSON.parse(body);
+			console.log(obj);
+
+			var options = "";
+
+			for (var light in obj) {
+
+	 			options += '<option value="' + light + '"';
+	 			if (light == selected)
+	 				options += ' selected';
+	 			options += '>' + obj[light]["name"] + '</option>';
+	 		}
+	 		console.log(options);
+	 		res.end(options);
+	});
+	
+});
+
+// CSS
+app.get('/bootstrap.min.css',function(req, res) {
+  	res.sendFile(__dirname+'/bootstrap.min.css');
+});
+// jQuery
+app.get('/jquery.js',function(req, res) {
+  	res.sendFile(__dirname+'/jquery.js');
+});
 
 // Post request opvangen
 app.post('/light',function(req, res) {
 	console.log(req.body);
   	var color = req.body.colorHue;
   	var light = req.body.light;
-  	light = 14;
 
   	var obj;
   	if (typeof req.body.uit !== 'undefined' && req.body.uit != null)
@@ -33,7 +70,7 @@ app.post('/light',function(req, res) {
   		obj = {"on":true, "sat":255, "bri":255,"hue": parseInt(color)};
 
   	lightFunc(light, color, obj);
-  	res.redirect("/");
+  	res.redirect("/?light=" + light);
 });
 
 // Functie voor het aanspreken van de lichten
@@ -50,8 +87,8 @@ function lightFunc(light, colorHue, obj) {
 	};
 
 	var options = {
-	    host: '10.0.1.3',
-	    path: '/api/' + username + '/lights/' + light + '/state',
+	    host: host,
+	    path: path + '/' + light + '/state',
 	    port: 80,
 	    method: 'PUT',
 	    headers: headers
